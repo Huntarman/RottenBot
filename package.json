@@ -1,0 +1,27 @@
+{
+  "name": "rottenbot",
+  "version": "1.0.0",
+  "description": "discord bot with brain-rotting content",
+  "main": "rottenbot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Huntarman/RottenBot.git"
+  },
+  "keywords": [
+    "discord",
+    "bot"
+  ],
+  "author": "Huntarman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Huntarman/RottenBot/issues"
+  },
+  "homepage": "https://github.com/Huntarman/RottenBot#readme",
+  "dependencies": {
+    "discord.js": "^14.15.3",
+    "dotenv": "^16.4.5"
+  }
+}
