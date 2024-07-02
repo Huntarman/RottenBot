@@ -1,7 +1,6 @@
 require("dotenv").config();
 const discord = require("discord.js");
-
-const prefix = "/";
+const path = require("node:path");
 
 const fs = require("fs");
 
@@ -12,35 +11,61 @@ const client = new discord.Client({
     discord.GatewayIntentBits.MessageContent,
   ],
 });
+
 client.commands = new discord.Collection();
-const commandFiles = fs
-  .readdirSync("./commands/")
-  .filter((file) => file.endsWith(".js"));
 
-for (const file of commandFiles) {
-  const command = require(`./commands/${file}`);
+const foldersPath = path.join(__dirname, "commands");
+const commandFolders = fs.readdirSync(foldersPath);
 
-  client.commands.set(command.name, command);
+for (const folder of commandFolders) {
+  const commandsPath = path.join(foldersPath, folder);
+  const commandFiles = fs
+    .readdirSync(commandsPath)
+    .filter((file) => file.endsWith(".js"));
+  for (const file of commandFiles) {
+    const filePath = path.join(commandsPath, file);
+    const command = require(filePath);
+    // Set a new item in the Collection with the key as the command name and the value as the exported module
+    if ("data" in command && "execute" in command) {
+      client.commands.set(command.data.name, command);
+    } else {
+      console.log(
+        `[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`
+      );
+    }
+  }
 }
 
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
 
-client.on("messageCreate", (message) => {
-  console.log(message.content);
-  if (!message.content.startsWith(prefix) || message.author.bot) return;
+client.on(discord.Events.InteractionCreate, async (interaction) => {
+  if (!interaction.isChatInputCommand()) return;
 
-  const args = message.content.slice(prefix.length).split("/ +/");
-  const command = args.shift().toLowerCase();
+  const command = interaction.client.commands.get(interaction.commandName);
 
-  if (command === "grzechprzeklenstwo") {
-    client.commands.get("grzechprzeklenstwo").execute(message, args);
+  if (!command) {
+    console.error(`No command matching ${interaction.commandName} was found.`);
+    return;
   }
-  if (command === "rot") {
-    client.commands.get("rot").execute(message, args);
+
+  try {
+    await command.execute(interaction);
+  } catch (error) {
+    console.error(error);
+    if (interaction.replied || interaction.deferred) {
+      await interaction.followUp({
+        content: "There was an error while executing this command!",
+        ephemeral: true,
+      });
+    } else {
+      await interaction.reply({
+        content: "There was an error while executing this command!",
+        ephemeral: true,
+      });
+    }
   }
-  message.delete();
 });
 
 client.login(process.env.DISCORD_TOKEN);

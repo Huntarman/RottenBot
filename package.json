@@ -22,6 +22,7 @@
   "homepage": "https://github.com/Huntarman/RottenBot#readme",
   "dependencies": {
     "discord.js": "^14.15.3",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "eslint": "^9.6.0"
   }
 }
