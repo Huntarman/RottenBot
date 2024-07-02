@@ -24,7 +24,6 @@ module.exports = {
   async execute(interaction) {
     await interaction.reply("Proszę zapiąć pasy\nZaraz nie będzie dobrze");
     const rot_level = interaction.options.getInteger("rot_level");
-    console.log(rot_level);
     if (rot_level) {
       let finalmessage = "";
       for (let i = 0; i < (rot_level <= 10 ? rot_level : 10); i++) {
