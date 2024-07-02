@@ -114,7 +114,7 @@ module.exports = {
       }
       const exampleEmbed = new EmbedBuilder()
         .setColor(0x0099ff)
-        .setTitle("Co Ernest ugotował?")
+        .setTitle("Co Ernest ugotował? 🧑‍🍳")
         .setURL(null)
         .setAuthor({
           name: "Janusz Boruwa",
