@@ -14,12 +14,20 @@ const dict = {
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("rot")
-    .setDescription("Unleash the rot"),
+    .setDescription("Unleash the rot")
+    .addIntegerOption((option) =>
+      option
+        .setName("rot_level")
+        .setDescription("How much rot do you want? (max 10)")
+        .setRequired(false)
+    ),
   async execute(interaction) {
     await interaction.reply("Proszę zapiąć pasy\nZaraz nie będzie dobrze");
-    if (args[0]) {
+    const rot_level = interaction.options.getInteger("rot_level");
+    console.log(rot_level);
+    if (rot_level) {
       let finalmessage = "";
-      for (let i = 0; i < (args[0] <= 10 ? args[0] : 10); i++) {
+      for (let i = 0; i < (rot_level <= 10 ? rot_level : 10); i++) {
         rand = Math.floor(Math.random() * 10);
         finalmessage += dict[rand] + "\n";
       }
