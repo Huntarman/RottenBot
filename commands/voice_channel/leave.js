@@ -18,8 +18,6 @@ module.exports = {
         "Nie rozłączysz mnie bez wejścia na kanał!"
       );
     }
-    console.log(interaction.member.voice.channelId);
-    console.log(connection.joinConfig.channelId);
     connection.destroy();
     await interaction.reply("Wiedziałem że nie wytrzymasz mojego rizzu");
   },

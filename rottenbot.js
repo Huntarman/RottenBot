@@ -9,6 +9,10 @@ const client = new discord.Client({
     discord.GatewayIntentBits.Guilds,
     discord.GatewayIntentBits.GuildMessages,
     discord.GatewayIntentBits.MessageContent,
+    discord.GatewayIntentBits.GuildVoiceStates,
+    discord.GatewayIntentBits.GuildEmojisAndStickers,
+    discord.GatewayIntentBits.GuildMessageReactions,
+    discord.GatewayIntentBits.DirectMessageReactions,
   ],
 });
 

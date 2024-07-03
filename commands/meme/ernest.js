@@ -9,27 +9,35 @@ const mocneAlko = {
   5: "Bimber",
   6: "Gin",
   7: "Absynt",
-  8: "Amarena",
+  8: "Aperol",
   9: "Campari",
-  10: "Aperol",
+  10: "Cointrau",
+  11: "Sambuca",
+  12: "Brandy",
+  13: "Triple sec",
 };
 const slabeAlko = {
   0: "Szampan",
   1: "Malibu",
   2: "Harnold",
-  3: "Cointrau",
+  3: "Amarena",
   4: "Likier toffi",
   5: "Wódka smakowa",
   6: "Curacao",
   7: "Sangria",
   8: "Likier brzoskwiniowy",
+  9: "Kahlua",
+  10: "Baileys",
+  11: "Martini",
+  12: "Likier bananowy",
 };
 const wodkiSmakowe = {
   0: "Wiśniówka",
   1: "Cytrynówka",
-  2: "Mango",
+  2: "Wódka Mango",
   3: "Malinówka",
   4: "Miętówka",
+  5: "Żurawinówka",
 };
 const soki = {
   0: "Sok Pomarańczowy",
@@ -45,6 +53,7 @@ const topy = {
   3: "Woda gazowana",
   4: "Corona",
   5: "Radioaktywny Monster",
+  6: "Tonic",
 };
 const dodatki = {
   1: "Syrop cukrowy",
@@ -54,6 +63,7 @@ const dodatki = {
   5: "Limonka",
   6: "Pomarańcza",
   7: "Gałka muszkatołowa",
+  8: "Angostura",
 };
 module.exports = {
   data: new SlashCommandBuilder()
@@ -206,30 +216,30 @@ module.exports = {
 };
 
 function generateDrink(Drink) {
-  Drink.wybor1 = mocneAlko[Math.floor(Math.random() * 11)];
+  Drink.wybor1 = mocneAlko[Math.floor(Math.random() * 14)];
   Drink.ilosc1 = Math.floor(Math.random() * 3) * 10 + 30;
   if (Math.random() < 0.5) {
-    Drink.wybor2 = mocneAlko[Math.floor(Math.random() * 11)];
+    Drink.wybor2 = mocneAlko[Math.floor(Math.random() * 14)];
     Drink.ilosc2 = Math.floor(Math.random() * 2) * 10 + 20;
   } else {
-    let wybor = Math.floor(Math.random() * 9);
+    let wybor = Math.floor(Math.random() * 13);
     if (wybor == 5) {
-      Drink.wybor2 = wodkiSmakowe[Math.floor(Math.random() * 5)];
+      Drink.wybor2 = wodkiSmakowe[Math.floor(Math.random() * 6)];
     } else Drink.wybor2 = slabeAlko[wybor];
     Drink.ilosc2 = Math.floor(Math.random() * 3) * 10 + 20;
   }
-  let wybor = Math.floor(Math.random() * 9);
+  let wybor = Math.floor(Math.random() * 13);
   if (wybor == 5) {
     Drink.wybor3 = wodkiSmakowe[Math.floor(Math.random() * 5)];
   } else Drink.wybor3 = slabeAlko[wybor];
   Drink.ilosc3 = Math.floor(Math.random() * 3) * 10 + 20;
   Drink.sok = soki[Math.floor(Math.random() * 5)];
   Drink.ilosc4 = Math.floor(Math.random() * 4) * 10 + 20;
-  Drink.top = topy[Math.floor(Math.random() * 6)];
+  Drink.top = topy[Math.floor(Math.random() * 7)];
   if (Math.random() < 0.5) {
-    Drink.dodatek1 = dodatki[Math.floor(Math.random() * 7) + 1];
+    Drink.dodatek1 = dodatki[Math.floor(Math.random() * 8) + 1];
   }
   if (Math.random() < 0.5) {
-    Drink.dodatek2 = dodatki[Math.floor(Math.random() * 7) + 1];
+    Drink.dodatek2 = dodatki[Math.floor(Math.random() * 8) + 1];
   }
 }
