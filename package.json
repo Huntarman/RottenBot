@@ -31,6 +31,7 @@
     "libsodium-wrappers": "^0.7.13",
     "npm": "^10.8.1",
     "opusscript": "^0.0.8",
-    "sodium-native": "^4.1.1"
+    "sodium-native": "^4.1.1",
+    "ytdl-core": "^4.11.5"
   }
 }
