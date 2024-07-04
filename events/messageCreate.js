@@ -5,6 +5,7 @@ module.exports = {
     if (message.author.bot) return;
     if (!message.content.includes("🤓")) return;
     else {
+      message.react("🤓");
       message.channel.send(`<@${message.author.id}> 🤓`);
     }
   },
