@@ -85,6 +85,6 @@ const AudioPlayer = async (guild, song, interaction) => {
 
   await songQueue.text_channel.send(`Teraz gram: **${song.title}**`);
   audioPlayer.on("error", (error) => {
-    return interaction.reply("Coś poszło nie tak 😔");
+    return songQueue.text_channel.send("Coś poszło nie tak z odwarzaczem 😔");
   });
 };
