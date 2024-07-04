@@ -80,7 +80,7 @@ const AudioPlayer = async (guild, song, interaction) => {
   audioPlayer.play(resource, { seek: 0, volume: 1 });
   audioPlayer.on(AudioPlayerStatus.Idle, () => {
     songQueue.songs.shift();
-    AudioPlayer(guild, songQueue.songs[0]);
+    AudioPlayer(guild, songQueue.songs[0], interaction);
   });
 
   await songQueue.text_channel.send(`Teraz gram: **${song.title}**`);
