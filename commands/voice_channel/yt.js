@@ -7,6 +7,7 @@ const {
   VoiceConnectionStatus,
 } = require("@discordjs/voice");
 const ytdl = require("ytdl-core");
+const ytpl = require("ytpl");
 
 const queue = new Map();
 // queue(interaction.guild.id, queue_constructor object { voice_channel, text_channel, connection, song[] });
@@ -36,19 +37,30 @@ module.exports = {
     }
 
     const url = interaction.options.getString("url");
-    if (!ytdl.validateURL(url)) {
+
+    if (!ytdl.validateURL(url) && !ytpl.validateID(url)) {
       return interaction.reply("Niepoprawny url");
     }
+
     const serverQueue = queue.get(interaction.guild.id);
-
+    console.log(serverQueue);
     let song = {};
-    const songInfo = await ytdl.getInfo(url);
-    song = {
-      title: songInfo.videoDetails.title,
-      url: songInfo.videoDetails.video_url,
-    };
+    let songs = {};
+    let playlistTitle = "";
+    if (ytdl.validateURL(url)) {
+      const songInfo = await ytdl.getInfo(url);
+      song = {
+        title: songInfo.videoDetails.title,
+        url: songInfo.videoDetails.video_url,
+      };
+    }
+    if (ytpl.validateID(url)) {
+      const playlist = await ytpl(url);
+      playlistTitle = playlist.title;
+      songs = playlist.items;
+    }
 
-    if (!serverQueue) {
+    if (ytdl.validateURL(url) && !ytpl.validateID(url) && !serverQueue) {
       const queue_constructor = {
         voice_channel: interaction.member.voice.channel,
         text_channel: interaction.channel,
@@ -58,14 +70,42 @@ module.exports = {
       queue.set(interaction.guild.id, queue_constructor, interaction);
       queue_constructor.songs.push(song);
       AudioPlayer(interaction.guild, queue_constructor.songs[0]);
+    } else if (ytpl.validateID(url) && !serverQueue) {
+      const queue_constructor = {
+        voice_channel: interaction.member.voice.channel,
+        text_channel: interaction.channel,
+        connection: connection,
+        songs: [],
+      };
+      song = {
+        title: songs[0].title,
+        url: songs[0].shortUrl,
+      };
+      queue.set(interaction.guild.id, queue_constructor, interaction);
+      queue_constructor.songs.push(song);
+      AudioPlayer(interaction.guild, queue_constructor.songs[0]);
+      addPlaylist(interaction.guild, songs, 1, playlistTitle);
+    } else if (ytpl.validateID(url)) {
+      addPlaylist(interaction.guild, songs, 0, playlistTitle);
     } else {
       serverQueue.songs.push(song);
       return interaction.reply(`Dodano do kolejki: **${song.title}**`);
     }
-    return interaction.reply(`Gramy!`);
   },
 };
 
+const addPlaylist = async (guild, playlist, start, playlistTitle) => {
+  const songQueue = queue.get(guild.id);
+  for (let i = start; i < playlist.length; i++) {
+    songQueue.songs.push({
+      title: playlist[i].title,
+      url: playlist[i].shortUrl,
+    });
+  }
+  return songQueue.text_channel.send(
+    `Do kolejki dodano playlistę: **${playlistTitle}** - ${playlist.length} utworów`
+  );
+};
 const AudioPlayer = async (guild, song, interaction) => {
   const songQueue = queue.get(guild.id);
 
@@ -73,7 +113,10 @@ const AudioPlayer = async (guild, song, interaction) => {
     queue.delete(guild.id);
     return;
   }
-  const stream = ytdl(song.url, { filter: "audioonly" });
+  const stream = ytdl(song.url, {
+    filter: "audioonly",
+    quality: "lowestaudio",
+  });
   const audioPlayer = createAudioPlayer();
   const resource = createAudioResource(stream);
   songQueue.connection.subscribe(audioPlayer);
