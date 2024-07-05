@@ -2,8 +2,8 @@ const { SlashCommandBuilder } = require("discord.js");
 const { getVoiceConnection } = require("@discordjs/voice");
 const ytdl = require("ytdl-core");
 const ytpl = require("ytpl");
-const { queue } = require("../util/queue");
-const { AudioPlayer } = require("../util/AudioPlayer");
+const { queue } = require("../../util/queue");
+const { AudioPlayer } = require("../../util/AudioPlayer");
 
 module.exports = {
   data: new SlashCommandBuilder()

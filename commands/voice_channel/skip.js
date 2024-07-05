@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require("discord.js");
-const { queue } = require("../util/queue");
-const { AudioPlayer } = require("../util/AudioPlayer");
+const { queue } = require("../../util/queue");
+const { AudioPlayer } = require("../../util/AudioPlayer");
 
 module.exports = {
   data: new SlashCommandBuilder()
