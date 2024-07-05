@@ -17,7 +17,6 @@ const AudioPlayer = async (guild, song) => {
     quality: "lowestaudio",
   });
   const audioPlayer = createAudioPlayer();
-  console.log(audioPlayer.state.status);
   const resource = createAudioResource(stream);
   songQueue.connection.subscribe(audioPlayer);
   audioPlayer.play(resource, { seek: 0, volume: 1 });
