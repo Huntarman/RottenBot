@@ -1,17 +1,9 @@
 const { SlashCommandBuilder } = require("discord.js");
-const {
-  getVoiceConnection,
-  createAudioPlayer,
-  createAudioResource,
-  AudioPlayerStatus,
-  VoiceConnectionStatus,
-} = require("@discordjs/voice");
+const { getVoiceConnection } = require("@discordjs/voice");
 const ytdl = require("ytdl-core");
 const ytpl = require("ytpl");
-
-const queue = new Map();
-// queue(interaction.guild.id, queue_constructor object { voice_channel, text_channel, connection, song[] });
-module.exports = { queue };
+const { queue } = require("../util/queue");
+const { AudioPlayer } = require("../util/AudioPlayer");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -43,7 +35,6 @@ module.exports = {
     }
 
     const serverQueue = queue.get(interaction.guild.id);
-    console.log(serverQueue);
     let song = {};
     let songs = {};
     let playlistTitle = "";
@@ -69,7 +60,7 @@ module.exports = {
       };
       queue.set(interaction.guild.id, queue_constructor, interaction);
       queue_constructor.songs.push(song);
-      AudioPlayer(interaction.guild, queue_constructor.songs[0]);
+      AudioPlayer(interaction.guild, queue_constructor.songs[0], interaction);
     } else if (ytpl.validateID(url) && !serverQueue) {
       const queue_constructor = {
         voice_channel: interaction.member.voice.channel,
@@ -83,7 +74,7 @@ module.exports = {
       };
       queue.set(interaction.guild.id, queue_constructor, interaction);
       queue_constructor.songs.push(song);
-      AudioPlayer(interaction.guild, queue_constructor.songs[0]);
+      AudioPlayer(interaction.guild, queue_constructor.songs[0], interaction);
       addPlaylist(interaction.guild, songs, 1, playlistTitle);
     } else if (ytpl.validateID(url)) {
       addPlaylist(interaction.guild, songs, 0, playlistTitle);
@@ -91,6 +82,7 @@ module.exports = {
       serverQueue.songs.push(song);
       return interaction.reply(`Dodano do kolejki: **${song.title}**`);
     }
+    return interaction.reply("Gramy 🫡");
   },
 };
 
@@ -105,29 +97,4 @@ const addPlaylist = async (guild, playlist, start, playlistTitle) => {
   return songQueue.text_channel.send(
     `Do kolejki dodano playlistę: **${playlistTitle}** - ${playlist.length} utworów`
   );
-};
-const AudioPlayer = async (guild, song, interaction) => {
-  const songQueue = queue.get(guild.id);
-
-  if (!song) {
-    queue.delete(guild.id);
-    return;
-  }
-  const stream = ytdl(song.url, {
-    filter: "audioonly",
-    quality: "lowestaudio",
-  });
-  const audioPlayer = createAudioPlayer();
-  const resource = createAudioResource(stream);
-  songQueue.connection.subscribe(audioPlayer);
-  audioPlayer.play(resource, { seek: 0, volume: 1 });
-  audioPlayer.on(AudioPlayerStatus.Idle, () => {
-    songQueue.songs.shift();
-    AudioPlayer(guild, songQueue.songs[0], interaction);
-  });
-
-  await songQueue.text_channel.send(`Teraz gram: **${song.title}**`);
-  audioPlayer.on("error", (error) => {
-    return songQueue.text_channel.send("Coś poszło nie tak z odwarzaczem 😔");
-  });
 };
