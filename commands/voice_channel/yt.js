@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require("discord.js");
-const { getVoiceConnection } = require("@discordjs/voice");
+const { getVoiceConnection, joinVoiceChannel } = require("@discordjs/voice");
 const ytdl = require("ytdl-core");
 const ytpl = require("ytpl");
 const { queue } = require("../../util/queue");
@@ -14,11 +14,13 @@ module.exports = {
     ),
 
   async execute(interaction) {
-    const connection = getVoiceConnection(interaction.guild.id);
+    let connection = getVoiceConnection(interaction.guild.id);
     if (!connection) {
-      return await interaction.reply(
-        "Nie jestem na kanale, więc nie mogę gnić!"
-      );
+      connection = joinVoiceChannel({
+        channelId: interaction.member.voice.channel.id,
+        guildId: interaction.guild.id,
+        adapterCreator: interaction.guild.voiceAdapterCreator,
+      });
     }
     if (
       interaction.member.voice.channelId !== connection.joinConfig.channelId

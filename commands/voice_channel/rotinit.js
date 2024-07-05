@@ -3,10 +3,10 @@ const {
   getVoiceConnection,
   createAudioPlayer,
   createAudioResource,
-  AudioPlayerStatus,
   NoSubscriberBehavior,
+  joinVoiceChannel,
 } = require("@discordjs/voice");
-
+const join = require("./join");
 const fs = require("fs");
 const path = require("path");
 
@@ -34,11 +34,18 @@ module.exports = {
       .map((file) => path.basename(file, ".mp3"));
 
     var option = interaction.options.getString("rot_option");
-    const connection = getVoiceConnection(interaction.guild.id);
+    let connection = getVoiceConnection(interaction.guild.id);
     if (!connection) {
-      return await interaction.reply(
-        "Nie jestem na kanale, więc nie mogę gnić!"
-      );
+      connection = joinVoiceChannel({
+        channelId: interaction.member.voice.channel.id,
+        guildId: interaction.guild.id,
+        adapterCreator: interaction.guild.voiceAdapterCreator,
+      });
+    }
+    if (
+      interaction.member.voice.channelId !== connection.joinConfig.channelId
+    ) {
+      return await interaction.reply("Nie mozesz rotować bez bycia na kanale!");
     }
     if (!mp3Files.includes(option)) {
       const randomIndex = Math.floor(Math.random() * mp3Files.length);
@@ -52,11 +59,9 @@ module.exports = {
     const resource = createAudioResource(directoryPath + "/" + option + ".mp3");
     connection.subscribe(audioPlayer);
     audioPlayer.play(resource);
-    audioPlayer.on(AudioPlayerStatus.Playing, () => {
-      return interaction.reply("Enjoy!🙂");
-    });
     audioPlayer.on("error", (error) => {
       return interaction.reply("Coś poszło nie tak 😔");
     });
+    return interaction.reply("Enjoy!🙂");
   },
 };
