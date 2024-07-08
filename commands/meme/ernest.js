@@ -76,7 +76,8 @@ module.exports = {
     if (
       interaction.options.getString("sekret") == null ||
       (interaction.options.getString("sekret") != "kociol" &&
-        interaction.options.getString("sekret") != "pio")
+        interaction.options.getString("sekret") != "pio" &&
+        interaction.options.getString("sekret") != "absynt")
     ) {
       let wylosowanyDrink = {
         wybor1: "",
@@ -177,7 +178,7 @@ module.exports = {
         });
 
       interaction.reply({ embeds: [exampleEmbed] });
-    } else {
+    } else if (interaction.options.getString("sekret") == "kociol") {
       textDrink =
         "🪣 **Dosłowny litr wódki**\n" +
         "🪣 **2 litry piwa** \n " +
@@ -210,6 +211,34 @@ module.exports = {
             "https://static.wikia.nocookie.net/asterix-i-obelix/images/3/3c/Asterix.png/revision/latest?cb=20140411152835&path-prefix=pl",
         });
 
+      interaction.reply({ embeds: [exampleEmbed] });
+    } else {
+      textDrink = "🥃 **Absynt** - 100 ml\n" + "🧃 **Benzyna** - Top \n ";
+      const exampleEmbed = new EmbedBuilder()
+        .setColor(0x0099ff)
+        .setTitle("Kubek szczęścia")
+        .setURL(null)
+        .setAuthor({
+          name: "Druid Paronamix",
+          iconURL:
+            "https://yt3.googleusercontent.com/vJOLFTsnnoiT83wZff5s26aXJn-xpUPX5FsMSG0zgF1Dnlgmf3g4ffzW7JNSlmjP4vFBlmp1=s900-c-k-c0x00ffffff-no-rj",
+          url: null,
+        })
+        .setDescription("Lepsze niż denaturat z chlebem")
+        .setThumbnail(
+          "https://yt3.googleusercontent.com/vJOLFTsnnoiT83wZff5s26aXJn-xpUPX5FsMSG0zgF1Dnlgmf3g4ffzW7JNSlmjP4vFBlmp1=s900-c-k-c0x00ffffff-no-rj"
+        )
+        .addFields({
+          name: "Jak przyrządzić:",
+          value: textDrink,
+        })
+        .setImage(null)
+        .setTimestamp()
+        .setFooter({
+          text: "Każdy student by wyzerował",
+          iconURL:
+            "https://static.wikia.nocookie.net/asterix-i-obelix/images/3/3c/Asterix.png/revision/latest?cb=20140411152835&path-prefix=pl",
+        });
       interaction.reply({ embeds: [exampleEmbed] });
     }
   },
