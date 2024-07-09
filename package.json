@@ -29,6 +29,7 @@
     "ffmpeg-static": "^5.2.0",
     "install": "^0.13.0",
     "libsodium-wrappers": "^0.7.13",
+    "node-fetch": "^3.3.2",
     "npm": "^10.8.1",
     "opusscript": "^0.0.8",
     "sodium-native": "^4.1.1",
