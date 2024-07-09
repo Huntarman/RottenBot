@@ -3,10 +3,13 @@ module.exports = {
   name: Events.MessageCreate,
   async execute(message) {
     if (message.author.bot) return;
-    if (!message.content.includes("🤓")) return;
-    else {
+
+    if (!message.content.includes("🤓") && !message.content.includes("💀")) {
+      return;
+    } else if (message.content.includes("🤓")) {
       message.react("🤓");
-      message.channel.send(`<@${message.author.id}> 🤓`);
+    } else if (message.content.includes("💀")) {
+      message.react("💀");
     }
   },
 };
