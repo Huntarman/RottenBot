@@ -11,8 +11,6 @@ const client = new discord.Client({
     discord.GatewayIntentBits.MessageContent,
     discord.GatewayIntentBits.GuildVoiceStates,
     discord.GatewayIntentBits.GuildMembers,
-    discord.GatewayIntentBits.GuildPresences,
-    discord.GatewayIntentBits.GuildModeration,
     discord.GatewayIntentBits.GuildEmojisAndStickers,
     discord.GatewayIntentBits.GuildMessageReactions,
     discord.GatewayIntentBits.DirectMessageReactions,
