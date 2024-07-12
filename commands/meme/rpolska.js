@@ -26,6 +26,17 @@ module.exports = {
         if (message === "") {
           message = "Bez treści 😔";
         }
+        let imageUrl = toppost.url_overridden_by_dest;
+        if (toppost.domain === "v.redd.it") {
+          imageUrl = "";
+          message = "Kliknij w linka żeby obejrzeć załącznik 😉";
+        } else if (
+          !toppost.is_reddit_media_domain &&
+          !toppost.domain.startsWith("self.")
+        ) {
+          imageUrl = "";
+          message = "Kliknij w linka żeby obejrzeć załącznik 😉";
+        }
         const exampleEmbed = new EmbedBuilder()
           .setColor(0x0099ff)
           .setTitle('Dzisiejszy "najlepszy" post z r/Polska')
@@ -41,7 +52,7 @@ module.exports = {
             name: toppost.title,
             value: message,
           })
-          .setImage(toppost.url_overridden_by_dest)
+          .setImage()
           .setTimestamp()
           .setFooter({
             text: "u/" + toppost.author + " | " + toppost.ups + " upvotes",
