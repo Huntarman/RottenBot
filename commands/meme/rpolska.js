@@ -45,7 +45,6 @@ module.exports = {
           .setTimestamp()
           .setFooter({
             text: "u/" + toppost.author + " | " + toppost.ups + " upvotes",
-            iconURL: data.thumbnail,
           });
 
         return await interaction.reply({ embeds: [exampleEmbed] });
