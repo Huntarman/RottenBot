@@ -52,7 +52,7 @@ module.exports = {
             name: toppost.title,
             value: message,
           })
-          .setImage()
+          .setImage(imageUrl)
           .setTimestamp()
           .setFooter({
             text: "u/" + toppost.author + " | " + toppost.ups + " upvotes",

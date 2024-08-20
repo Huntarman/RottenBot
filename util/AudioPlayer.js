@@ -3,7 +3,7 @@ const {
   createAudioResource,
   AudioPlayerStatus,
 } = require("@discordjs/voice");
-const ytdl = require("ytdl-core");
+const ytdl = require("@distube/ytdl-core");
 const { queue } = require("./queue");
 const AudioPlayer = async (guild, song) => {
   const songQueue = queue.get(guild.id);
