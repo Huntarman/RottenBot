@@ -39,7 +39,7 @@ module.exports = {
       interaction.member.voice.channelId !== connection.joinConfig.channelId
     ) {
       return await interaction.reply(
-        "Nie mozesz puścić eulogi bez oświecenia (dołączenia na kanał)"
+        "You can't play the eulogy without enlightement (joining the channel)"
       );
     }
 
@@ -54,7 +54,7 @@ module.exports = {
     connection.subscribe(audioPlayer);
     audioPlayer.play(resource);
     audioPlayer.on("error", (error) => {
-      return interaction.reply("Coś poszło nie tak 😔");
+      return interaction.reply("Something went wrong 😔");
     });
     return interaction.reply("https://i.redd.it/f59q9ezqqm231.jpg");
   },

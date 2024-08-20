@@ -7,18 +7,16 @@ module.exports = {
   async execute(interaction) {
     const connection = getVoiceConnection(interaction.guild.id);
     if (!connection) {
-      return await interaction.reply(
-        "Nie jestem na kanale, więc nie mogę wyjść!"
-      );
+      return await interaction.reply("I'm not on the channel, I can't quit");
     }
     if (
       interaction.member.voice.channelId !== connection.joinConfig.channelId
     ) {
       return await interaction.reply(
-        "Nie rozłączysz mnie bez wejścia na kanał!"
+        "You can't disconnect me without joining the channel first"
       );
     }
     connection.destroy();
-    await interaction.reply("Wiedziałem że nie wytrzymasz mojego rizzu");
+    await interaction.reply("You wouldn't get it");
   },
 };

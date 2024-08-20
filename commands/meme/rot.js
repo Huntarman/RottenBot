@@ -22,7 +22,7 @@ module.exports = {
         .setRequired(false)
     ),
   async execute(interaction) {
-    await interaction.reply("Proszę zapiąć pasy\nZaraz nie będzie dobrze");
+    await interaction.reply("Lock your seatbelts\nThis ain't gonna end well");
     const rot_level = interaction.options.getInteger("rot_level");
     if (rot_level) {
       let finalmessage = "";

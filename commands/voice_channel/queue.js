@@ -14,7 +14,7 @@ module.exports = {
   async execute(interaction) {
     const server_queue = queue.get(interaction.guild.id);
     if (!server_queue) {
-      return await interaction.reply("Nie ma nic w kolejce!");
+      return await interaction.reply("There's nothing in the queue!");
     }
     let queueString = "";
     let amount = interaction.options.getInteger("amount");
@@ -57,7 +57,7 @@ module.exports = {
       .setImage(null)
       .setTimestamp()
       .setFooter({
-        text: "Słuchałbym",
+        text: "I'd listen",
         iconURL:
           "https://github.com/Huntarman/RottenBot/blob/main/icon.png?raw=true",
       });

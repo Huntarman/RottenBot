@@ -20,7 +20,7 @@ module.exports = {
       serverQueue.connection.joinConfig.channelId
     ) {
       return await interaction.reply(
-        "Nie mozesz skipować bez bycia na kanale!"
+        "You can't skip without being on the voice channel!"
       );
     }
 

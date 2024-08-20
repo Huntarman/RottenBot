@@ -8,7 +8,7 @@ module.exports = {
   async execute(interaction) {
     if (!interaction.member.voice.channel) {
       return await interaction.reply(
-        "Nie jesteś na kanale, nie dołączę, bo nie mógłbym cię nękać!"
+        "You're not on the voice channel, I won't join, I wouldn't be able to bully you!"
       );
     }
     const connection = joinVoiceChannel({
@@ -16,6 +16,6 @@ module.exports = {
       guildId: interaction.guild.id,
       adapterCreator: interaction.guild.voiceAdapterCreator,
     });
-    await interaction.reply("Czas szerzyć zepsucie!");
+    await interaction.reply("Time to rot!");
   },
 };

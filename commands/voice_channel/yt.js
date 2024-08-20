@@ -14,6 +14,13 @@ module.exports = {
     ),
 
   async execute(interaction) {
+    if (
+      !interaction.member.voice.channel.id ||
+      !interaction.guild.id ||
+      !interaction.guild.voiceAdapterCreator
+    ) {
+      return interaction.reply("Nope");
+    }
     let connection = getVoiceConnection(interaction.guild.id);
     if (!connection) {
       connection = joinVoiceChannel({
@@ -26,14 +33,14 @@ module.exports = {
       interaction.member.voice.channelId !== connection.joinConfig.channelId
     ) {
       return await interaction.reply(
-        "Nie mozesz dodac filmu do kolejki bez bycia na kanale LOL!"
+        "You can't add a song without joining the channel LOL!"
       );
     }
 
     const url = interaction.options.getString("url");
 
     if (!ytdl.validateURL(url) && !ytpl.validateID(url)) {
-      return interaction.reply("Niepoprawny url");
+      return interaction.reply("Wrong url");
     }
 
     const serverQueue = queue.get(interaction.guild.id);

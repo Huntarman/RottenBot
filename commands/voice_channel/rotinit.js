@@ -45,7 +45,7 @@ module.exports = {
     if (
       interaction.member.voice.channelId !== connection.joinConfig.channelId
     ) {
-      return await interaction.reply("Nie mozesz rotować bez bycia na kanale!");
+      return await interaction.reply("Can't rot without joining the channel!");
     }
     if (!mp3Files.includes(option)) {
       const randomIndex = Math.floor(Math.random() * mp3Files.length);
@@ -60,7 +60,7 @@ module.exports = {
     connection.subscribe(audioPlayer);
     audioPlayer.play(resource);
     audioPlayer.on("error", (error) => {
-      return interaction.reply("Coś poszło nie tak 😔");
+      return interaction.reply("Something went wrong 😔");
     });
     return interaction.reply("Enjoy!🙂");
   },
