@@ -33,6 +33,10 @@
     "node-fetch": "^3.3.2",
     "npm": "^10.8.1",
     "opusscript": "^0.0.8",
+    "pg": "^8.12.0",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.3",
+    "sequelize-cli": "^6.6.2",
     "sodium-native": "^4.1.1",
     "ytpl": "^2.3.0"
   }
