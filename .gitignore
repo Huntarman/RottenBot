@@ -9,5 +9,7 @@ package-lock.json
 node_modules/
 
 audio/
+config/
+migrations/
 
 *.json
