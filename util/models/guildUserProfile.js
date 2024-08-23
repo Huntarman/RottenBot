@@ -26,6 +26,26 @@ GuildUserProfile.init(
     },
     tokens: { type: DataTypes.INTEGER, defaultValue: 1000, allowNull: false },
     daily_bonus: { type: DataTypes.DATE, allowNull: true },
+    times_begged: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+      allowNull: false,
+    },
+    times_gambled: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+      allowNull: false,
+    },
+    amount_gifted: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+      allowNull: false,
+    },
+    jackpots: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+      allowNull: false,
+    },
   },
   {
     sequelize,

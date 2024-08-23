@@ -8,7 +8,6 @@ User.init(
     user_id: { type: DataTypes.STRING, primaryKey: true },
     user_name: { type: DataTypes.STRING },
     join_date: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
-    jackpots: { type: DataTypes.INTEGER, defaultValue: 0 },
   },
   {
     sequelize,
