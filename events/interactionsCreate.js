@@ -1,4 +1,6 @@
 const { Events } = require("discord.js");
+const { User, Guild } = require("../util/models/index");
+const { DataTypes } = require("sequelize");
 
 module.exports = {
   name: Events.InteractionCreate,
@@ -13,7 +15,17 @@ module.exports = {
       );
       return;
     }
-
+    await User.findOrCreate({
+      where: { user_id: interaction.user.id },
+      defaults: {
+        user_name: interaction.user.username,
+        join_date: new Date(),
+      },
+    });
+    await Guild.findOrCreate({
+      where: { guild_id: interaction.guild.id },
+      defaults: { guild_name: interaction.guild.name },
+    });
     try {
       await command.execute(interaction);
     } catch (error) {
