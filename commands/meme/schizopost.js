@@ -48,7 +48,7 @@ module.exports = {
           image_url = "";
           message = "Kliknij w linka żeby obejrzeć załącznik 😉";
         }
-        const exampleEmbed = new EmbedBuilder()
+        const embed = new EmbedBuilder()
           .setColor(0x0099ff)
           .setTitle(`Post z r/${randomPost.subreddit}`)
           .setURL("https://www.reddit.com" + randomPost.permalink)
@@ -71,7 +71,7 @@ module.exports = {
               "u/" + randomPost.author + " | " + randomPost.ups + " upvotes",
           });
 
-        return await interaction.reply({ embeds: [exampleEmbed] });
+        return await interaction.reply({ embeds: [embed] });
       }
     } catch (error) {
       return await interaction.reply(

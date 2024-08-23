@@ -36,7 +36,7 @@ module.exports = {
       if (queueString.length + loopString.length > 1024) break;
       queueString += loopString;
     }
-    const exampleEmbed = new EmbedBuilder()
+    const embed = new EmbedBuilder()
       .setColor(0x0099ff)
       .setTitle("Songs in the queue:")
       .setURL(null)
@@ -62,6 +62,6 @@ module.exports = {
           "https://github.com/Huntarman/RottenBot/blob/main/icon.png?raw=true",
       });
 
-    await interaction.reply({ embeds: [exampleEmbed] });
+    await interaction.reply({ embeds: [embed] });
   },
 };

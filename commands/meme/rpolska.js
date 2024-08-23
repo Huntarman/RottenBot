@@ -37,7 +37,7 @@ module.exports = {
           imageUrl = "";
           message = "Kliknij w linka żeby obejrzeć załącznik 😉";
         }
-        const exampleEmbed = new EmbedBuilder()
+        const embed = new EmbedBuilder()
           .setColor(0x0099ff)
           .setTitle('Dzisiejszy "najlepszy" post z r/Polska')
           .setURL("https://www.reddit.com" + toppost.permalink)
@@ -58,7 +58,7 @@ module.exports = {
             text: "u/" + toppost.author + " | " + toppost.ups + " upvotes",
           });
 
-        return await interaction.reply({ embeds: [exampleEmbed] });
+        return await interaction.reply({ embeds: [embed] });
       } else {
         return interaction.reply("There was an error fetching the top post.");
       }

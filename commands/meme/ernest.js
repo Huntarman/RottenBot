@@ -123,7 +123,7 @@ module.exports = {
       if (wylosowanyDrink.dodatek2 != "") {
         textDrink += "🍋**" + wylosowanyDrink.dodatek2 + "** - dodatek\n";
       }
-      const exampleEmbed = new EmbedBuilder()
+      const embed = new EmbedBuilder()
         .setColor(0x0099ff)
         .setTitle("Co Ernest ugotował? 🧑‍🍳")
         .setURL(null)
@@ -148,11 +148,11 @@ module.exports = {
           iconURL: "https://mm.pwn.pl/ency/jpg/583/2c/d10i0045.jpg",
         });
 
-      interaction.reply({ embeds: [exampleEmbed] });
+      interaction.reply({ embeds: [embed] });
     } else if (interaction.options.getString("sekret") == "pio") {
       textDrink = "";
       for (let i = 0; i < 5; i++) textDrink += "🥃 ** Wódka ** - 40 ml\n";
-      const exampleEmbed = new EmbedBuilder()
+      const embed = new EmbedBuilder()
         .setColor(0x0099ff)
         .setTitle("Podwójna wóda zmieszana z potrójną wódą")
         .setURL(null)
@@ -177,7 +177,7 @@ module.exports = {
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSA9KvUZgmf0mtBxCbwADNjKiSBbCp1lsGQSg&s",
         });
 
-      interaction.reply({ embeds: [exampleEmbed] });
+      interaction.reply({ embeds: [embed] });
     } else if (interaction.options.getString("sekret") == "kociol") {
       textDrink =
         "🪣 **Dosłowny litr wódki**\n" +
@@ -185,7 +185,7 @@ module.exports = {
         "🪣 **700ml szampana**\n" +
         "🪣 **1 litr napoju energetycznego BePower** \n" +
         "🪣 **420ml syropu malinowego** \n";
-      const exampleEmbed = new EmbedBuilder()
+      const embed = new EmbedBuilder()
         .setColor(0x0099ff)
         .setTitle("Kociołek Paronamixa")
         .setURL(null)
@@ -211,10 +211,10 @@ module.exports = {
             "https://static.wikia.nocookie.net/asterix-i-obelix/images/3/3c/Asterix.png/revision/latest?cb=20140411152835&path-prefix=pl",
         });
 
-      interaction.reply({ embeds: [exampleEmbed] });
+      interaction.reply({ embeds: [embed] });
     } else {
       textDrink = "🥃 **Absynt** - 100 ml\n" + "🧃 **Benzyna** - Top \n ";
-      const exampleEmbed = new EmbedBuilder()
+      const embed = new EmbedBuilder()
         .setColor(0x0099ff)
         .setTitle("Kubek szczęścia")
         .setURL(null)
@@ -239,7 +239,7 @@ module.exports = {
           iconURL:
             "https://static.wikia.nocookie.net/asterix-i-obelix/images/3/3c/Asterix.png/revision/latest?cb=20140411152835&path-prefix=pl",
         });
-      interaction.reply({ embeds: [exampleEmbed] });
+      interaction.reply({ embeds: [embed] });
     }
   },
 };

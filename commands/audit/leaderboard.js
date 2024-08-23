@@ -28,7 +28,10 @@ module.exports = {
     for (const [key, value] of leaderboardArray) {
       message += `${1 + i++}.<@${key}> - **${value}**\n`;
     }
-    const exampleEmbed = new EmbedBuilder()
+    if (message === "") {
+      message = "No one has kicked anyone 🫡\n";
+    }
+    const embed = new EmbedBuilder()
       .setColor(0x0099ff)
       .setTitle("Leaderboard of forced disconnects")
       .setURL(null)
@@ -42,6 +45,6 @@ module.exports = {
       })
       .setImage(null)
       .setTimestamp();
-    interaction.reply({ embeds: [exampleEmbed] });
+    interaction.reply({ embeds: [embed] });
   },
 };
