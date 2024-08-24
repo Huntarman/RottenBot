@@ -65,7 +65,7 @@ module.exports = {
       (choice === "scissors" && botChoice === "paper")
     ) {
       await GuildUserProfile.update(
-        { tokens: userProfile.tokens + amount * 3 },
+        { tokens: userProfile.tokens + amount * 2 },
         {
           where: {
             guild_id: interaction.guild.id,
@@ -75,7 +75,7 @@ module.exports = {
       );
       return interaction.reply(
         `You won! You chose ${choice} and I chose ${botChoice}. You won ${
-          amount * 3
+          amount * 2
         } tokens!`
       );
     }
