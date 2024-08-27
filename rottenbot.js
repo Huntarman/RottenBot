@@ -14,7 +14,10 @@ const client = new discord.Client({
     discord.GatewayIntentBits.GuildEmojisAndStickers,
     discord.GatewayIntentBits.GuildMessageReactions,
     discord.GatewayIntentBits.DirectMessageReactions,
+    discord.GatewayIntentBits.DirectMessages,
+    discord.GatewayIntentBits.DirectMessageTyping,
   ],
+  partials: [discord.Partials.Channel, discord.Partials.Message],
 });
 
 client.commands = new discord.Collection();
