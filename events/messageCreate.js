@@ -4,9 +4,7 @@ module.exports = {
   async execute(message) {
     if (message.author.bot) return;
 
-    if (!message.content.includes("🤓") && !message.content.includes("💀")) {
-      return;
-    } else if (message.content.includes("🤓")) {
+    if (message.content.includes("🤓")) {
       message.react("🤓");
     } else if (message.content.includes("💀")) {
       message.react("💀");
