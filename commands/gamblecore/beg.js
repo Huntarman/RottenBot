@@ -27,25 +27,31 @@ module.exports = {
     }
 
     const newTokens = 10 + Math.floor(Math.random() * 6);
-    const userProfile = await GuildUserProfile.findOne({
-      where: {
-        user_id: interaction.user.id,
-        guild_id: interaction.guild.id,
-      },
-    });
-    if (userProfile) {
-      userProfile.tokens += newTokens;
-      userProfile.times_begged += 1;
-      await userProfile.save();
-    } else {
+    try {
+      const userProfile = await GuildUserProfile.findOne({
+        where: {
+          user_id: interaction.user.id,
+          guild_id: interaction.guild.id,
+        },
+      });
+      if (userProfile) {
+        userProfile.tokens += newTokens;
+        userProfile.times_begged += 1;
+        await userProfile.save();
+      } else {
+        return interaction.reply(
+          "It appears you don't have a gambler profile on this server yet.\nPlease use the /gamblestatus command to create one for this server."
+        );
+      }
+      await interaction.reply("💀");
+      await interaction.channel.send(message);
+      await interaction.channel.send(
+        `Awarded <@${interaction.user.id}> ${newTokens} tokens in exchange for their dignity`
+      );
+    } catch (error) {
       return interaction.reply(
-        "It appears you don't have a gambler profile on this server yet.\nPlease use the /gamblestatus command to create one for this server."
+        "An error occurred while processing your request"
       );
     }
-    await interaction.reply("💀");
-    await interaction.channel.send(message);
-    await interaction.channel.send(
-      `Awarded <@${interaction.user.id}> ${newTokens} tokens in exchange for their dignity`
-    );
   },
 };

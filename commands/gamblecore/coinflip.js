@@ -29,40 +29,46 @@ module.exports = {
     if (choice !== "heads" && choice !== "tails") {
       return interaction.reply("You need to choose either heads or tails");
     }
-    const userProfile = await GuildUserProfile.findOne({
-      where: {
-        guild_id: interaction.guild.id,
-        user_id: interaction.user.id,
-      },
-    });
+    try {
+      const userProfile = await GuildUserProfile.findOne({
+        where: {
+          guild_id: interaction.guild.id,
+          user_id: interaction.user.id,
+        },
+      });
 
-    if (!userProfile) {
+      if (!userProfile) {
+        return interaction.reply(
+          "It appears you don't have a gambler profile on this server yet.\nPlease use the /gamblestatus command to create one for this server."
+        );
+      }
+
+      await interaction.reply("Flipping the coin...");
+
+      if (token > userProfile.tokens) {
+        token = userProfile.tokens;
+      }
+      if (token < 1) {
+        return interaction.reply("You don't have enough tokens to gamble");
+      }
+      const coin = Math.random() < 0.5 ? "heads" : "tails";
+      let result;
+      if (coin === choice) {
+        result = "You won";
+      } else {
+        result = "You lost";
+      }
+      if (result === "You won") {
+        userProfile.tokens += token;
+      } else {
+        userProfile.tokens -= token;
+      }
+      await userProfile.save();
+    } catch (error) {
       return interaction.reply(
-        "It appears you don't have a gambler profile on this server yet.\nPlease use the /gamblestatus command to create one for this server."
+        "An error occurred while processing your request"
       );
     }
-
-    await interaction.reply("Flipping the coin...");
-
-    if (token > userProfile.tokens) {
-      token = userProfile.tokens;
-    }
-    if (token < 1) {
-      return interaction.reply("You don't have enough tokens to gamble");
-    }
-    const coin = Math.random() < 0.5 ? "heads" : "tails";
-    let result;
-    if (coin === choice) {
-      result = "You won";
-    } else {
-      result = "You lost";
-    }
-    if (result === "You won") {
-      userProfile.tokens += token;
-    } else {
-      userProfile.tokens -= token;
-    }
-    await userProfile.save();
     interaction.channel.send(
       `<@${interaction.user.id}> flipped a coin and bet ${token} tokens on ${choice}!`
     );
