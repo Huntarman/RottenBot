@@ -15,17 +15,21 @@ module.exports = {
       );
       return;
     }
-    await User.findOrCreate({
-      where: { user_id: interaction.user.id },
-      defaults: {
-        user_name: interaction.user.username,
-        join_date: new Date(),
-      },
-    });
-    await Guild.findOrCreate({
-      where: { guild_id: interaction.guild.id },
-      defaults: { guild_name: interaction.guild.name },
-    });
+    try {
+      await User.findOrCreate({
+        where: { user_id: interaction.user.id },
+        defaults: {
+          user_name: interaction.user.username,
+          join_date: new Date(),
+        },
+      });
+      await Guild.findOrCreate({
+        where: { guild_id: interaction.guild.id },
+        defaults: { guild_name: interaction.guild.name },
+      });
+    } catch (error) {
+      console.error(error);
+    }
     try {
       await command.execute(interaction);
     } catch (error) {
