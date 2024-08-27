@@ -14,11 +14,10 @@ module.exports = {
     ),
 
   async execute(interaction) {
-    if (
-      !interaction.member.voice.channel.id ||
-      !interaction.guild.id ||
-      !interaction.guild.voiceAdapterCreator
-    ) {
+    if (!interaction.member.voice.channel) {
+      return interaction.reply("Nope");
+    }
+    if (!interaction.guild.id || !interaction.guild.voiceAdapterCreator) {
       return interaction.reply("Nope");
     }
     let connection = getVoiceConnection(interaction.guild.id);
