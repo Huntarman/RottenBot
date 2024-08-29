@@ -21,7 +21,7 @@ module.exports = {
         .setRequired(false)
     ),
   async execute(interaction) {
-    const directoryPath = path.join(__dirname, "../..", "audio");
+    const directoryPath = path.join(__dirname, "../..", "example_audio_dir");
     let files;
     try {
       files = fs.readdirSync(directoryPath);

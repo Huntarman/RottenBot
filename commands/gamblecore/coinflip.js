@@ -63,18 +63,19 @@ module.exports = {
       } else {
         userProfile.tokens -= token;
       }
+      userProfile.times_gambled += 1;
       await userProfile.save();
+      interaction.channel.send(
+        `<@${interaction.user.id}> flipped a coin and bet ${token} tokens on ${choice}!`
+      );
+      interaction.channel.send(`The coin landed on ${coin}! ${result}!`);
+      interaction.channel.send(
+        `${result} ${token} tokens! You now have ${userProfile.tokens} tokens!`
+      );
     } catch (error) {
       return interaction.reply(
         "An error occurred while processing your request"
       );
     }
-    interaction.channel.send(
-      `<@${interaction.user.id}> flipped a coin and bet ${token} tokens on ${choice}!`
-    );
-    interaction.channel.send(`The coin landed on ${coin}! ${result}!`);
-    interaction.channel.send(
-      `${result} ${token} tokens! You now have ${userProfile.tokens} tokens!`
-    );
   },
 };

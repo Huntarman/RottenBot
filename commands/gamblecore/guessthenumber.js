@@ -63,17 +63,18 @@ module.exports = {
       await interaction.reply("Guessing the number...");
       if (number === randomNumber) {
         userProfile.tokens += tokens * range;
-        await userProfile.save();
         interaction.channel.send(
           `You guessed the number! You won ${tokens * range}!`
         );
       } else {
         userProfile.tokens -= tokens;
-        await userProfile.save();
+
         interaction.channel.send(
           `You didn't guess the number! The number was ${randomNumber}! You lost ${tokens} tokens!`
         );
       }
+      userProfile.times_gambled += 1;
+      await userProfile.save();
     } catch (error) {
       return interaction.reply(
         "An error occurred while processing your request"

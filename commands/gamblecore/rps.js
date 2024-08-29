@@ -65,15 +65,8 @@ module.exports = {
         (choice === "paper" && botChoice === "rock") ||
         (choice === "scissors" && botChoice === "paper")
       ) {
-        await GuildUserProfile.update(
-          { tokens: userProfile.tokens + amount * 2 },
-          {
-            where: {
-              guild_id: interaction.guild.id,
-              user_id: interaction.user.id,
-            },
-          }
-        );
+        userProfile.tokens += amount;
+        await userProfile.save();
         return interaction.reply(
           `You won! You chose ${choice} and I chose ${botChoice}. You won ${
             amount * 2
@@ -81,15 +74,9 @@ module.exports = {
         );
       }
 
-      await GuildUserProfile.update(
-        { tokens: userProfile.tokens - amount },
-        {
-          where: {
-            guild_id: interaction.guild.id,
-            user_id: interaction.user.id,
-          },
-        }
-      );
+      userProfile.tokens -= amount;
+      await userProfile.save();
+
       return interaction.reply(
         `You lost! You chose ${choice} and I chose ${botChoice}. You lost ${amount} tokens!`
       );

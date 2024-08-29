@@ -78,8 +78,8 @@ module.exports = {
             value: `${userProfile.times_begged}`,
           },
           {
-            name: "Jackpots:",
-            value: `${userProfile.jackpots}`,
+            name: "Times gambled:",
+            value: `${userProfile.times_gambled}`,
           },
           {
             name: "Amount gifted:",

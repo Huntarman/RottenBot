@@ -41,11 +41,6 @@ GuildUserProfile.init(
       defaultValue: 0,
       allowNull: false,
     },
-    jackpots: {
-      type: DataTypes.INTEGER,
-      defaultValue: 0,
-      allowNull: false,
-    },
   },
   {
     sequelize,

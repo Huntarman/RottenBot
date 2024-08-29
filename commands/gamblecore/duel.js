@@ -215,14 +215,10 @@ const Duel = async (interaction, challenger, target, amount) => {
             result = `${interaction.user.username} wins! ${player1Choice} beats ${player2Choice}.\n<@${interaction.user.id}> won ${amount} tokens.\n<@${target.id}> lost ${amount} tokens.`;
             challengerProfile.tokens += amount;
             targetProfile.tokens -= amount;
-            await challengerProfile.save();
-            await targetProfile.save();
           } else {
             result = `<@${target.id}> wins! ${player2Choice} beats ${player1Choice}.\n<@${interaction.user.id}> lost ${amount} tokens.\n<@${target.id}> won ${amount} tokens.`;
             challengerProfile.tokens -= amount;
             targetProfile.tokens += amount;
-            await challengerProfile.save();
-            await targetProfile.save();
           }
           await interaction.channel.send(result);
         } else {
@@ -248,8 +244,6 @@ const Duel = async (interaction, challenger, target, amount) => {
             );
             challengerProfile.tokens -= amount;
             targetProfile.tokens += amount;
-            await challengerProfile.save();
-            await targetProfile.save();
           } else if (player1Choice && !player2Choice) {
             const updatedEmbed = EmbedBuilder.from(
               duelMsgTarget.embeds[0]
@@ -264,10 +258,12 @@ const Duel = async (interaction, challenger, target, amount) => {
             );
             challengerProfile.tokens += amount;
             targetProfile.tokens -= amount;
-            await challengerProfile.save();
-            await targetProfile.save();
           }
         }
+        challengerProfile.times_gambled += 1;
+        targetProfile.times_gambled += 1;
+        await challengerProfile.save();
+        await targetProfile.save();
       } catch (error) {
         console.error(error);
         return interaction.reply(

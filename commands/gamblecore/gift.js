@@ -66,17 +66,19 @@ module.exports = {
       }
 
       userProfile.tokens -= amount;
+      userProfile.amount_gifted += amount;
       recipientProfile.tokens += amount;
 
       await userProfile.save();
       await recipientProfile.save();
+
+      await interaction.reply(
+        `<@${interaction.user.id}> has <@${user.id}> gifted ${amount} tokens`
+      );
     } catch (error) {
       return interaction.reply(
         "An error occurred while processing your request"
       );
     }
-    await interaction.reply(
-      `<@${interaction.user.id}> has <@${user.id}> gifted ${amount} tokens`
-    );
   },
 };
